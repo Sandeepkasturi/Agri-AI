@@ -4,7 +4,7 @@ from PIL import Image
 import io
 
 # Set API Key
-genai.configure(api_key="AIzaSyCzEjZj0VlVSO3L_bti6DhUrvq0dDDFYX8")
+genai.configure(api_key=st.secrets["api_key"])
 
 # Streamlit UI
 st.set_page_config(layout="wide")  # Enable wide layout

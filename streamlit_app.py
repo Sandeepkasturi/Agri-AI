@@ -2,8 +2,6 @@ import streamlit as st
 import google.generativeai as genai
 from PIL import Image
 import io
-import cv2
-import numpy as np
 
 # Set API Key
 genai.configure(api_key="AIzaSyCzEjZj0VlVSO3L_bti6DhUrvq0dDDFYX8")
@@ -16,24 +14,17 @@ st.write("Upload an image of a plant to diagnose diseases and get treatment reco
 # Layout: Split into two columns
 col1, col2 = st.columns(2)
 
-
-# Webcam Capture Function
+# Replace Webcam Capture Function (Now using the webcam through streamlit)
 def capture_webcam():
-    cap = cv2.VideoCapture(0)
-    ret, frame = cap.read()
-    if ret:
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        cap.release()
-        return Image.fromarray(frame)
-    cap.release()
+    # Streamlit allows direct webcam capture
+    image = st.camera_input("Capture Image from Webcam")
+    if image:
+        return Image.open(image)
     return None
 
-
 with col1:
-    if st.button("Capture Image from Webcam"):
-        captured_image = capture_webcam()
-    else:
-        captured_image = None
+    # Capture image button using the webcam
+    captured_image = capture_webcam() if st.button("Capture Image from Webcam") else None
 
     # Upload Image Option
     uploaded_file = st.file_uploader("Or upload a plant image (leaf, stem, etc.)", type=["jpg", "jpeg", "png"])
